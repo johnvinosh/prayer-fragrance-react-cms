@@ -1,19 +1,30 @@
 import { COLLECTIONS } from "./../enums";
 import { buildCollection } from "firecms";
-import { PrayerPoint, PrayerPointLocale } from "../types";
+import { PrayerQuote, PrayerQuoteLocale } from "../types";
 import { locales } from "../enums";
 
-const PrayerPointLocaleCollection = buildCollection<PrayerPointLocale>({
+const PrayerQuoteLocaleCollection = buildCollection<PrayerQuoteLocale>({
   path: "locale",
   customId: locales,
   name: "Locales",
   singularName: "Locale",
   properties: {
-    title: {
-      name: "Title",
+    name: {
+      name: "Name",
       dataType: "string",
       validation: {
         required: true,
+      },
+    },
+    attachment: {
+      name: "Attachment",
+      dataType: "array",
+      of: {
+        dataType: "string",
+        storage: {
+          storagePath: "prayer-quotes/attachment",
+          acceptedFiles: ["image/*", "application/*"],
+        },
       },
     },
     content: {
@@ -31,7 +42,7 @@ const PrayerPointLocaleCollection = buildCollection<PrayerPointLocale>({
             dataType: "string",
             storage: {
               storeUrl: true,
-              storagePath: "prayer-points/thumbnail",
+              storagePath: "prayer-quotes/thumbnail",
               acceptedFiles: ["image/*"],
               metadata: {
                 cacheControl: "max-age=1000000",
@@ -46,7 +57,7 @@ const PrayerPointLocaleCollection = buildCollection<PrayerPointLocale>({
             dataType: "string",
             storage: {
               storeUrl: true,
-              storagePath: "prayer-points/thumbnail",
+              storagePath: "prayer-quotes/thumbnail",
               acceptedFiles: ["video/*"],
               metadata: {
                 cacheControl: "max-age=1000000",
@@ -64,28 +75,19 @@ const PrayerPointLocaleCollection = buildCollection<PrayerPointLocale>({
         },
       },
     },
-    source: {
-      name: "Source",
-      dataType: "string",
-    },
-    sourceLink: {
-      name: "Source Link",
-      dataType: "string",
-      url: true,
-    },
   },
 });
 
-export const PrayerPointCollection = buildCollection<PrayerPoint>({
-  name: "Prayer Points",
-  singularName: "Prayer Point",
-  path: COLLECTIONS.PRAYER_POINTS,
+export const PrayerQuoteCollection = buildCollection<PrayerQuote>({
+  name: "Prayer quotes",
+  singularName: "Prayer Quote",
+  path: COLLECTIONS.PRAYER_QUOTES,
   permissions: ({ authController }) => ({
     edit: true,
     create: true,
     delete: false,
   }),
-  subcollections: [PrayerPointLocaleCollection],
+  subcollections: [PrayerQuoteLocaleCollection],
   properties: {
     availableLanguage: {
       name: "Available Languages",
@@ -94,6 +96,10 @@ export const PrayerPointCollection = buildCollection<PrayerPoint>({
         dataType: "string",
         enumValues: locales,
       },
+    },
+    name: {
+      name: "Name",
+      dataType: "string",
     },
     amens: {
       dataType: "array",
@@ -113,9 +119,16 @@ export const PrayerPointCollection = buildCollection<PrayerPoint>({
         path: COLLECTIONS.USERS,
       },
     },
-    date: {
-      name: "Date",
-      dataType: "date",
+    attachment: {
+      name: "Attachment",
+      dataType: "array",
+      of: {
+        dataType: "string",
+        storage: {
+          storagePath: "prayer-quotes/attachment",
+          acceptedFiles: ["image/*", "application/*"],
+        },
+      },
     },
     modifiedAt: {
       name: "Modified On",
@@ -141,7 +154,7 @@ export const PrayerPointCollection = buildCollection<PrayerPoint>({
       name: "Image",
       dataType: "string",
       storage: {
-        storagePath: "prayer-points/images",
+        storagePath: "prayer-quotes/images",
         acceptedFiles: ["image/*"],
         metadata: {
           cacheControl: "max-age=1000000",
@@ -154,13 +167,6 @@ export const PrayerPointCollection = buildCollection<PrayerPoint>({
       of: {
         dataType: "string",
         name: "Tag",
-      },
-    },
-    title: {
-      name: "Title",
-      dataType: "string",
-      validation: {
-        required: true,
       },
     },
     content: {
@@ -178,7 +184,7 @@ export const PrayerPointCollection = buildCollection<PrayerPoint>({
             dataType: "string",
             storage: {
               storeUrl: true,
-              storagePath: "prayer-points/thumbnail",
+              storagePath: "prayer-quotes/thumbnail",
               acceptedFiles: ["image/*"],
               metadata: {
                 cacheControl: "max-age=1000000",
@@ -193,7 +199,7 @@ export const PrayerPointCollection = buildCollection<PrayerPoint>({
             dataType: "string",
             storage: {
               storeUrl: true,
-              storagePath: "prayer-points/thumbnail",
+              storagePath: "prayer-quotes/thumbnail",
               acceptedFiles: ["video/*"],
               metadata: {
                 cacheControl: "max-age=1000000",
@@ -210,15 +216,6 @@ export const PrayerPointCollection = buildCollection<PrayerPoint>({
           },
         },
       },
-    },
-    source: {
-      name: "Source",
-      dataType: "string",
-    },
-    sourceLink: {
-      name: "Source Link",
-      dataType: "string",
-      url: true,
     },
   },
 });

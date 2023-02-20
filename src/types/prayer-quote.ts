@@ -1,12 +1,10 @@
 import { EntityReference } from "firecms";
 
-export type PrayerPoint = {
-  title: string;
-  content: (ContentImage | ContentVideo | ContentText)[];
-  date: Date;
+export type PrayerQuote = {
+  name: string;
+  content: (ContentText | ContentImage | ContentVideo | ContentVideoURL)[];
+  attachment: string[];
   image: string;
-  source: string;
-  sourceLink: string;
   availableLanguage: string[];
   tags: string[];
   amens: EntityReference[];
@@ -17,11 +15,10 @@ export type PrayerPoint = {
   modifiedBy: EntityReference;
 };
 
-export type PrayerPointLocale = {
-  title: string;
-  content: (ContentImage | ContentVideo | ContentText)[];
-  source: string;
-  sourceLink: string;
+export type PrayerQuoteLocale = {
+  name: string;
+  content: (ContentText | ContentImage | ContentVideo | ContentVideoURL)[];
+  attachment: string[];
 };
 
 type ContentImage = {

@@ -5,7 +5,14 @@ import { Authenticator, FirebaseCMSApp } from "firecms";
 
 import "typeface-rubik";
 import "@fontsource/ibm-plex-mono";
-import { PrayerPointsCollection, UserCollection } from "./collections";
+import {
+  MissionaryCollection,
+  PrayerGuideCollection,
+  PrayerPointCollection,
+  PrayerQuoteCollection,
+  PrayerRequestCollection,
+  UserCollection,
+} from "./collections";
 import { firebaseConfig } from "./firebase";
 
 export default function App() {
@@ -31,7 +38,14 @@ export default function App() {
       name={"Prayer Fragrance Admin"}
       logo={"/pf-logo.png"}
       authentication={myAuthenticator}
-      collections={[PrayerPointsCollection, UserCollection]}
+      collections={[
+        PrayerPointCollection,
+        PrayerQuoteCollection,
+        PrayerGuideCollection,
+        PrayerRequestCollection,
+        MissionaryCollection,
+        UserCollection,
+      ]}
       firebaseConfig={firebaseConfig}
     />
   );
